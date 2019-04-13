@@ -11,8 +11,8 @@ ReactDOM.render(
   <BrowserRouter>
     <App>
       <Switch>
-        <Route exact path="/" component={CreateDeck.js} />
-        <Route path="/all" component={AllDecks.js} />
+        <Route exact path="/" component={CreateDeck} />
+        <Route path="/all" component={AllDecks} />
       </Switch>
     </App>
   </BrowserRouter>,

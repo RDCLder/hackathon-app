@@ -1,84 +1,135 @@
-import React from 'react';
-import {
-    isSignInPending,
-    loadUserData,
-    Person,
-    getFile,
-    putFile,
-    lookupProfile
-  } from 'blockstack';
+import React from "react";
+import { Container, Row, Col, Input, Button } from "react-bootstrap";
+import AddCard from "../partials/AddCard";
 
-const cardFileName = 'cards.json'
-class Data extends React.Component {
-    constructor(props) {
-        super(props);
-     
-        this.state = {
-          person: {
-            name() {
-              return 'Anonymous';
-            },
-            avatarUrl() {
-              return avatarFallbackImage;
-            },
-          },
-          username: "",
-          deck: [],
-          newCard: {
-            term: "",
-            definition: ""
-          },
-          cardIndex: 0,
-          isLoading: false
-        };
-      }
-    // componentDidMount() {
-    // this.fetchData()
-    // }
+class CreateDeck extends React.Component {
+  constructor(props) {
+    super(props);
 
-    handleNewCardChange(event) {
-        this.setState({
-          newCard: event.target.value
-        })
-      }
-    
-    handleNewCardSubmit(event) {
-    this.saveNewCard(this.state.newCard)
+    this.state = {
+      deckName: "",
+      deck: [],
+      allDecks: [],
+      alertMessage: null,
+      alertShow: false
+    };
+  }
+
+  changeDeckName(e) {
     this.setState({
-        newCard: {
-            term: "",
-            definition: ""
-        },
+      deckName: e.target.value
+    });
+  }
+
+  updateDeck(card) {
+    this.setState({
+      deck: this.state.deck.concat(card)
+    });
+    let allDecks = this.state.allDecks
+    allDecks = {...allDecks, deckName: []}
+  }
+
+  deleteFromDeck(word) {
+    let newDeck = this.state.deck.slice();
+    delete newDeck[word];
+    this.setState({ deck: newDeck });
+  }
+
+  addDeck() {
+    const deckNames = Object.keys(allDecks);
+    let deck = this.state.deck
+
+    // Error checks for empty name, name over 40 characters, or existing name
+    if (this.state.deckName === "") {
+      this.setState({
+        alertMessage: "The deck name can't be empty!",
+        alertErrorShow: true
+      });
+    } else if (this.state.deckName.length > 40) {
+      this.setState({
+        alertMessage: "The deck name can't exceed 40 characters!",
+        alertErrorShow: true
+      });
+    } else if (deckNames.includes(this.state.deckName)) {
+      this.setState({
+        alertMessage: "The deck name is already taken!",
+        alertErrorShow: true
+      });
+    } else {
+      // Update database
+      this.setState({
+        deckName: "",
+        alertErrorShow: false
+      });
+    }
+    // Closes error alert after 2 seconds
+    if (this.state.alertShow === true) {
+      setTimeout(() => {
+        this.setState({
+          alertErrorShow: false,
+          alertMessage: ""
+        });
+      }, 2000);
+    }
+
+    setTimeout(()=>{
+
     })
-    }
+  }
 
-    saveNewCard(cardText) {
-        let cards = this.state.cards
-    
-        let term = {
-          id: this.state.cardIndex++,
-          text: statusText.trim(),
-          created_at: Date.now()
-        }
-    
-        statuses.unshift(status)
-        const options = { encrypt: false }
-        putFile(statusFileName, JSON.stringify(statuses), options)
-          .then(() => {
-            this.setState({
-              statuses: statuses
-            })
-          })
-      }
+  render() {
+    const deck = this.state.deck.map(card => (
+      <Card id={card.word} word={card.word} text={card.text} />
+    )); 
 
-    render() {
-        return (
-            <>
-        
-            </>
-        );
-    }
+    return (
+      <Container fluid="true">
+
+        <Row>
+          <h3>Create New Deck</h3>
+        </Row>
+
+        <Row>
+          <Col>
+            <Input />
+          </Col>
+          <Col xs={2}>
+            <Button variant="primary" onClick={() => this.addDeck()}>
+              SAVE DECK
+            </Button>
+          </Col>
+        </Row>
+
+        <Row>{deck}</Row>
+
+        <AddCard
+          deck={this.state.deck}
+          update={card => this.updateDeck(card)}
+          delete={word => this.deleteFromDeck(word)}
+        />
+
+        <Alert
+          variant="danger"
+          show={this.state.alertErrorShow}
+          className="alert"
+        >
+          <Alert.Heading>
+            Error
+            <i
+              className="fas fa-times alertDismiss"
+              onClick={() => this.setState({ alertErrorShow: false })}
+            />
+          </Alert.Heading>
+          <p>{this.state.alertMessage}</p>
+        </Alert>
+
+      </Container>
+    );
+  }
 }
 
+// <i className="fas fa-save" />
+// <i className="fas fa-trash" />
+// <i className="fas fa-times" />
 
-export default Data
+export default CreateDeck;

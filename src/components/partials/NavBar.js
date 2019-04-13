@@ -57,6 +57,11 @@ class NavBar extends React.Component {
     blockstack.signUserOut(window.location.href)
   }
 
+  handleSignOut(event) {
+    event.preventDefault();
+    blockstack.signUserOut('/')
+  }
+
   render() {
     return (
       <Row style={navbarStyle}>
@@ -66,8 +71,8 @@ class NavBar extends React.Component {
             <h2>App Name</h2>
           </Link>
         </Col>
-        <Col className="my-auto">
-          <Link to="/">
+        <Col xs={1} className="my-auto">
+          <Link to="/create">
             <h4>CreateDeck</h4>
           </Link>
         </Col>

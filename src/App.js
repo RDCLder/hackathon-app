@@ -5,6 +5,9 @@ import NavBar from "./components/partials/NavBar";
 
 import UserInfo from './UserInfo';
 
+import {Redirect} from 'react-router-dom'
+
+
 const blockstack = require('blockstack');
 
 class App extends Component {
@@ -22,8 +25,9 @@ class App extends Component {
       this.loadPerson();
     }
 
+
+
     this.handleSignIn = this.handleSignIn.bind(this)
-    this.handleSignOut = this.handleSignOut.bind(this)
   }
 
   checkSignedInStatus() {
@@ -39,7 +43,6 @@ class App extends Component {
 
   loadPerson() {
     let username = blockstack.loadUserData().username
-
     blockstack.lookupProfile(username).then((person) => {
       this.setState({ person })
     })
@@ -50,16 +53,20 @@ class App extends Component {
     blockstack.redirectToSignIn()
   }
 
-  handleSignOut(event) {
-    event.preventDefault();
-    blockstack.signUserOut(window.location.href)
-  }
-
   render() {
     return (
       <div>
         <NavBar />
-        {this.props.children}
+        <p style={{display: this.state.isSignedIn ? 'none' : 'block' }}>
+          <button onClick={this.handleSignIn}>
+            Sign-in with Blockstack
+          </button>
+        </p>
+        
+        <p style={{display: !this.state.isSignedIn ? 'none' : 'block' }}>
+          <UserInfo user={this.state.person} />
+          {this.props.children}
+        </p>
       </div>
     )
   }
