@@ -1,19 +1,20 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from "react";
+import ReactDOM from "react-dom";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import './index.css';
-import App from './App';
-import registerServiceWorker from './registerServiceWorker';
+import App from "./App";
+
+// View Components
+import CreateDeck from "./components/views/CreateDeck";
+import AllDecks from "./components/views/AllDecks";
 
 ReactDOM.render(
-
-    <BrowserRouter>
-        <App>
-            <Switch>
-                <Route exact path="/" component={App} />
-                {/* <Route exact path="/allDeck" component={AllDeck} /> */}
-            </Switch>
-        </App>
-    </BrowserRouter>
-    , document.getElementById('root'));
-registerServiceWorker();
+  <BrowserRouter>
+    <App>
+      <Switch>
+        <Route exact path="/" component={CreateDeck.js} />
+        <Route path="/all" component={AllDecks.js} />
+      </Switch>
+    </App>
+  </BrowserRouter>,
+  document.getElementById("root")
+);
