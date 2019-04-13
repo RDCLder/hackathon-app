@@ -1,9 +1,15 @@
 import React from "react";
 import { Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
+const blockstack = require('blockstack')
 
 class NavBar extends React.Component {
   componentDidMount() {}
+
+  handleSignOut(event) {
+    event.preventDefault();
+    blockstack.signUserOut(window.location.href)
+  }
 
   render() {
     return (
@@ -22,6 +28,11 @@ class NavBar extends React.Component {
         <Col xs={1} className="my-auto">
           <Link to="/all">
             <h4>AllDecks</h4>
+          </Link>
+        </Col>
+        <Col xs={1} className="my-auto">
+          <Link to="/" onClick = {this.handleSignOut.bind(this)}>
+            <h4>SignOut</h4>
           </Link>
         </Col>
         <Col xs={1} className="my-auto" />

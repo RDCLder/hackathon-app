@@ -22,7 +22,6 @@ class App extends Component {
     }
 
     this.handleSignIn = this.handleSignIn.bind(this)
-    this.handleSignOut = this.handleSignOut.bind(this)
   }
 
   checkSignedInStatus() {
@@ -47,11 +46,6 @@ class App extends Component {
   handleSignIn(event) {
     event.preventDefault();
     blockstack.redirectToSignIn()
-  }
-
-  handleSignOut(event) {
-    event.preventDefault();
-    blockstack.signUserOut(window.location.href)
   }
 
   render() {
