@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Row, Col, Input, Button } from "react-bootstrap";
+import { Container, Row, Col, Card, Button, Alert } from "react-bootstrap";
 import AddCard from "../partials/AddCard";
 
 class CreateDeck extends React.Component {
@@ -33,29 +33,30 @@ class CreateDeck extends React.Component {
   }
 
   addDeck() {
-    const deckNames = Object.keys(allDecks);
+		// const deckNames = Object.keys(allDecks);
+		const deckNames = [];
 
     // Error checks for empty name, name over 40 characters, or existing name
     if (this.state.deckName === "") {
       this.setState({
         alertMessage: "The deck name can't be empty!",
-        alertErrorShow: true
+        alertShow: true
       });
     } else if (this.state.deckName.length > 40) {
       this.setState({
         alertMessage: "The deck name can't exceed 40 characters!",
-        alertErrorShow: true
+        alertShow: true
       });
     } else if (deckNames.includes(this.state.deckName)) {
       this.setState({
         alertMessage: "The deck name is already taken!",
-        alertErrorShow: true
+        alertShow: true
       });
     } else {
       // Update database
       this.setState({
         deckName: "",
-        alertErrorShow: false
+        alertShow: false
       });
     }
 
@@ -63,7 +64,7 @@ class CreateDeck extends React.Component {
     if (this.state.alertShow === true) {
       setTimeout(() => {
         this.setState({
-          alertErrorShow: false,
+          alertShow: false,
           alertMessage: ""
         });
       }, 2000);
@@ -71,9 +72,30 @@ class CreateDeck extends React.Component {
   }
 
   render() {
-    const deck = this.state.deck.map(card => (
-      <Card id={card.word} word={card.word} text={card.text} />
-    ));
+    // const deck = this.state.deck.map(card => (
+		// 	<Card id={card.word} 
+		// 		word={card.word} 
+		// 		text={card.text}
+		// 		delete={word => this.deleteFromDeck(word)}
+		// 	/>
+
+			const deck = this.state.deck.map(card => (
+				<Card key={card.word}>
+					<Card.Body>
+							<Card.Title>
+									{card.word}
+									<i className="fas fa-times cardButton"
+											onClick={() => this.deleteFromDeck(card.word)}
+									/>
+									<i className="fas fa-pencil-alt cardButton"
+									/>
+							</Card.Title>
+							<Card.Text className="cardText">
+									{card.text}
+							</Card.Text>
+					</Card.Body>
+			</Card>
+		));
 
     return (
       <Container fluid="true">
@@ -84,7 +106,7 @@ class CreateDeck extends React.Component {
 
         <Row>
           <Col>
-            <Input />
+            <input></input>
           </Col>
           <Col xs={2}>
             <Button variant="primary" onClick={() => this.addDeck()}>
@@ -98,19 +120,18 @@ class CreateDeck extends React.Component {
         <AddCard
           deck={this.state.deck}
           update={card => this.updateDeck(card)}
-          delete={word => this.deleteFromDeck(word)}
         />
 
         <Alert
           variant="danger"
-          show={this.state.alertErrorShow}
+          show={this.state.alertShow}
           className="alert"
         >
           <Alert.Heading>
             Error
             <i
               className="fas fa-times alertDismiss"
-              onClick={() => this.setState({ alertErrorShow: false })}
+              onClick={() => this.setState({ alertShow: false })}
             />
           </Alert.Heading>
           <p>{this.state.alertMessage}</p>

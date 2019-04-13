@@ -1,5 +1,5 @@
 import React from "react";
-import { Row, Col, Modal, Button, Alert } from "react-bootstrap";
+import { Container, Row, Col, Modal, Button, Alert } from "react-bootstrap";
 
 class AddCard extends React.Component {
   constructor(props) {
@@ -10,7 +10,7 @@ class AddCard extends React.Component {
       word: "",
       text: "",
       alertMessage: null,
-      alertErrorShow: false
+      alertShow: false
     };
   }
 
@@ -37,28 +37,28 @@ class AddCard extends React.Component {
     if (this.state.word === "") {
       this.setState({
         alertMessage: "The word can't be blank!",
-        alertErrorShow: true
+        alertShow: true
       });
     } else if (this.state.text === "") {
       this.setState({
         alertMessage: "The text can't be blank!",
-        alertErrorShow: true
+        alertShow: true
       });
     } else if (this.state.word.length > 40) {
       this.setState({
         alertMessage: "The word cannot exceed 40 characters!",
-        alertErrorShow: true
+        alertShow: true
       });
     } else if (this.state.word.length > 200) {
       this.setState({
         alertMessage: "The text cannot exceed 200 characters!",
-        alertErrorShow: true
+        alertShow: true
       });
     } else if (words.includes(this.state.word)) {
       this.setState({
         alertMessage: `${this.state.word} has already been used!`
       });
-      this.setState({ alertErrorShow: true });
+      this.setState({ alertShow: true });
     } else {
 			this.props.updateDeck({
 				word: this.state.word,
@@ -66,7 +66,7 @@ class AddCard extends React.Component {
 			});
       this.setState({
         show: false,
-				alertErrorShow: false,
+				alertShow: false,
 				word: "",
 				text: ""
       });
@@ -76,7 +76,7 @@ class AddCard extends React.Component {
     if (this.state.alertShow === true) {
       setTimeout(() => {
         this.setState({
-          alertErrorShow: false,
+          alertShow: false,
           alertMessage: ""
         });
       }, 2000);
@@ -86,7 +86,7 @@ class AddCard extends React.Component {
   render() {
     return (
       <React.Fragment>
-				
+
         <Button
 					variant="primary"
           onClick={() => this.handleShow()}
@@ -145,14 +145,14 @@ class AddCard extends React.Component {
 
         <Alert
           variant="danger"
-          show={this.state.alertErrorShow}
+          show={this.state.alertShow}
           className="alert"
         >
           <Alert.Heading>
             Error
             <i
               className="fas fa-times alertDismiss"
-              onClick={() => this.setState({ alertErrorShow: false })}
+              onClick={() => this.setState({ alertShow: false })}
             />
           </Alert.Heading>
           <p>{this.state.alertMessage}</p>
