@@ -65,11 +65,8 @@ class App extends Component {
         </p>
         <p style={{display: !this.state.isSignedIn ? 'none' : 'block' }}>
           <UserInfo user={this.state.person} />
-          <button onClick={this.handleSignOut}>
-            Sign-out
-          </button>
+          {this.props.children}
         </p>
-        {this.props.children}
       </div>
     )
   }
