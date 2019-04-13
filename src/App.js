@@ -58,19 +58,19 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <h1 className="App-title">Blockstack Create React App</h1>
+          <h1 className="App-title">FlashIt</h1>
+          <p style={{display: this.state.isSignedIn ? 'none' : 'block' }}>
+            <button onClick={this.handleSignIn}>
+              Sign-in with Blockstack
+            </button>
+          </p>
+          <p style={{display: !this.state.isSignedIn ? 'none' : 'block' }}>
+            <UserInfo user={this.state.person} />
+            <button onClick={this.handleSignOut}>
+              Sign-out
+            </button>
+          </p>
         </header>
-        <p style={{display: this.state.isSignedIn ? 'none' : 'block' }}>
-          <button onClick={this.handleSignIn}>
-            Sign-in with Blockstack
-          </button>
-        </p>
-        <p style={{display: !this.state.isSignedIn ? 'none' : 'block' }}>
-          <UserInfo user={this.state.person} />
-          <button onClick={this.handleSignOut}>
-            Sign-out
-          </button>
-        </p>
       </div>
     )
   }

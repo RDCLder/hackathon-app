@@ -1,6 +1,6 @@
 img.avatar {
-  width: 256px;
-  height: 256px;
+  width: 50px;
+  height: 50px;
   border-radius: 128px;
-  box-shadow: 10px 10px 20px #e5e5e5;
+  box-shadow: 3px 3px 7px #e5e5e5;
 }
