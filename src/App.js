@@ -1,32 +1,27 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import { Container, Row, Col } from "react-bootstrap";
+import { Redirect } from "react-router-dom";
 import NavBar from "./components/partials/NavBar";
+import UserInfo from "./UserInfo";
 
-import UserInfo from './UserInfo';
-
-import {Redirect} from 'react-router-dom'
-
-
-const blockstack = require('blockstack');
+const blockstack = require("blockstack");
 
 class App extends Component {
   constructor(props) {
-    super(props)
+    super(props);
 
     let isSignedIn = this.checkSignedInStatus();
 
     this.state = {
       isSignedIn,
       person: undefined
-    }
+    };
 
-    if(isSignedIn) {
+    if (isSignedIn) {
       this.loadPerson();
     }
 
-
-
-    this.handleSignIn = this.handleSignIn.bind(this)
+    this.handleSignIn = this.handleSignIn.bind(this);
   }
 
   checkSignedInStatus() {
@@ -34,47 +29,45 @@ class App extends Component {
       return true;
     } else if (blockstack.isSignInPending()) {
       blockstack.handlePendingSignIn().then(function(userData) {
-        window.location = window.location.origin
-      })
+        window.location = window.location.origin;
+      });
       return false;
     }
   }
 
   loadPerson() {
-    let username = blockstack.loadUserData().username
-    blockstack.lookupProfile(username).then((person) => {
-      this.setState({ person })
-    })
+    let username = blockstack.loadUserData().username;
+    blockstack.lookupProfile(username).then(person => {
+      this.setState({ person });
+    });
   }
 
   handleSignIn(event) {
     event.preventDefault();
-    blockstack.redirectToSignIn()
+    blockstack.redirectToSignIn();
   }
 
   render() {
     return (
-      <div>
+      <React.Fragment>
         <NavBar />
-        <p style={{display: this.state.isSignedIn ? 'none' : 'block' }}>
-          <button onClick={this.handleSignIn}>
-            Sign-in with Blockstack
-          </button>
-        </p>
-        
-        <p style={{display: !this.state.isSignedIn ? 'none' : 'block' }}>
-          <UserInfo user={this.state.person} />
+        <div style={{ display: this.state.isSignedIn ? "none" : "block" }}>
+          <button onClick={this.handleSignIn}>Sign-in with Blockstack</button>
+        </div>
+
+        <div style={{ display: !this.state.isSignedIn ? "none" : "block" }}>
+          {/* <UserInfo user={this.state.person} /> */}
           {this.props.children}
-        </p>
-      </div>
-    )
+        </div>
+      </React.Fragment>
+    );
   }
 }
 
 const styles = {
   box: {
-    border: 'solid 1px black',
+    border: "solid 1px black"
   }
-}
+};
 
 export default App;
