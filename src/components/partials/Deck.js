@@ -2,15 +2,19 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Card, Button } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
+import DeckModal from './DeckModal'
+
 class Deck extends React.Component {
     constructor(props) {
         super(props);
 
+        this.state = { modalShow: false };
     }
 
     render() {
 
         const link = `/deck/${this.props.deckinfo.deckName}`
+        let modalClose = () => this.setState({ modalShow: false });
 
         return (
             <Card style={styles.card}>
@@ -21,10 +25,16 @@ class Deck extends React.Component {
                             <Link to={link}>
                                 <Button style={styles.button}>Go to Deck</Button>
                             </Link>
-                            <Button style={styles.button}>View Cards</Button>
+                            <Button style={styles.button} onClick={() => this.setState({ modalShow: true })}>View Cards</Button>
                         </div>
                     </Card.Body>
                 </div>
+                <DeckModal 
+                deckinfo = {this.props.deckinfo}
+                show={this.state.modalShow}
+                onHide={modalClose}
+                />
+                
             </Card>
         );
     }
