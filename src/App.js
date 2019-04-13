@@ -44,7 +44,7 @@ class App extends Component {
     let username = blockstack.loadUserData().username
     blockstack.lookupProfile(username).then((person) => {
       this.setState({ person })
-    }).then(window.location.href ='/home')
+    })
   }
 
   handleSignIn(event) {
