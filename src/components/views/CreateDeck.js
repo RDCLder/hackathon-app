@@ -10,7 +10,7 @@ class CreateDeck extends React.Component {
 
     this.state = {
       deckName: "",
-      deck: [],
+      deck: {},
       alertMessage: null,
       alertShow: false
     };
@@ -26,13 +26,13 @@ class CreateDeck extends React.Component {
   }
 
   updateDeck(card) {
-    this.setState({
-      deck: this.state.deck.concat(card)
-    });
+    let newDeck = {...this.state.deck};
+    newDeck[card.word] = card;
+    this.setState({ deck: newDeck });
   }
 
   deleteFromDeck(word) {
-    let newDeck = this.state.deck.slice();
+    let newDeck = {...this.state.deck};
     delete newDeck[word];
     this.setState({ deck: newDeck });
   }
@@ -88,7 +88,7 @@ class CreateDeck extends React.Component {
 		// 		delete={word => this.deleteFromDeck(word)}
 		// 	/>
 
-			const deck = this.state.deck.map(card => (
+			const deck = Object.values(this.state.deck).map(card => (
 				<Card key={card.word}>
 					<Card.Body>
 							<Card.Title>
