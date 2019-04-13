@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-
-import './App.css';
+import { Container, Row, Col } from "react-bootstrap";
+import NavBar from "./components/partials/NavBar";
 
 import UserInfo from './UserInfo';
 
@@ -56,10 +56,8 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <h1 className="App-title">Blockstack Create React App</h1>
-        </header>
+      <div>
+        <NavBar />
         <p style={{display: this.state.isSignedIn ? 'none' : 'block' }}>
           <button onClick={this.handleSignIn}>
             Sign-in with Blockstack
@@ -71,6 +69,7 @@ class App extends Component {
             Sign-out
           </button>
         </p>
+        {this.props.children}
       </div>
     )
   }
