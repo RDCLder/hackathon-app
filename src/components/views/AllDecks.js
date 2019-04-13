@@ -1,5 +1,6 @@
 import React from 'react';
 import { Container, Row, Col } from "react-bootstrap";
+import DeckList from '../partials/DeckList'
 
 class AllDecks extends React.Component {
     constructor(props) {
@@ -16,9 +17,9 @@ class AllDecks extends React.Component {
 
     render() {
         return (
-            <React.Fragment>
-                AllDecks component
-            </React.Fragment>
+            <div>
+                <DeckList />
+            </div>        
         );
     }
 }
