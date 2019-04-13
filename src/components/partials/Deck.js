@@ -1,26 +1,60 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {Card} from 'react-bootstrap'
-
+import { Card, Button } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
 class Deck extends React.Component {
     constructor(props) {
         super(props);
-        
+
     }
 
     render() {
+
+        const link = `/deck/${this.props.deckinfo.deckName}`
+
         return (
-            <Card>
+            <Card style={styles.card}>
                 <Card.Body>{this.props.deckinfo.cards.length} terms</Card.Body>
-                <Card.Body>{this.props.deckinfo.deckName}</Card.Body>
+                <div style={styles.title}>
+                    <Card.Body style = {styles.justifyBetween}>{this.props.deckinfo.deckName}
+                        <div style = {styles.buttonContainer}>
+                            <Link to={link}>
+                                <Button style={styles.button}>Go to Deck</Button>
+                            </Link>
+                            <Button style={styles.button}>View Cards</Button>
+                        </div>
+                    </Card.Body>
+                </div>
             </Card>
         );
     }
 }
 
+const styles = {
+    card: {
+        marginTop: '15px',
+        boxShadow: '1px 1px 3px 1px'
+    },
+    title: {
+        fontWeight: 'bold',
+        fontSize: '2em',
+        paddingTop: '5px',
+        display:'flex',
+    },
+    button: {
+        marginRight: '5px'
+    },
+    buttonContainer: {
+        display: 'inline-block'
+    },
+    justifyBetween: {
+        display:'flex',
+        justifyContent:'space-between'
+    }
+}
 
 Deck.propTypes = {
-    
+
 };
 
 export default Deck

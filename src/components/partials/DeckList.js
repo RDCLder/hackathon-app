@@ -36,13 +36,18 @@ class DeckList extends React.Component {
             return <Deck key = {i} deckinfo = {deck}/>
         })
         return (
-            <div>
+            <div style = {styles.decklist}>
                 {decklist}
             </div>
         );
     }
 }
 
+const styles = {
+    decklist: {
+        margin:'40px'
+    }
+}
 
 DeckList.propTypes = {
     
