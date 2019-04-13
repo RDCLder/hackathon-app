@@ -8,7 +8,7 @@ class NavBar extends React.Component {
 
   handleSignOut(event) {
     event.preventDefault();
-    blockstack.signUserOut(window.location.href)
+    blockstack.signUserOut('/')
   }
 
   render() {
@@ -21,7 +21,7 @@ class NavBar extends React.Component {
           </Link>
         </Col>
         <Col xs={1} className="my-auto">
-          <Link to="/">
+          <Link to="/create">
             <h4>CreateDeck</h4>
           </Link>
         </Col>
