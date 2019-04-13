@@ -38,7 +38,6 @@ class App extends Component {
 
   loadPerson() {
     let username = blockstack.loadUserData().username
-
     blockstack.lookupProfile(username).then((person) => {
       this.setState({ person })
     })
@@ -55,6 +54,7 @@ class App extends Component {
   }
 
   render() {
+    console.log(this.state)
     return (
       <div>
         <NavBar />
@@ -65,11 +65,8 @@ class App extends Component {
         </p>
         <p style={{display: !this.state.isSignedIn ? 'none' : 'block' }}>
           <UserInfo user={this.state.person} />
-          <button onClick={this.handleSignOut}>
-            Sign-out
-          </button>
+          {this.props.children}
         </p>
-        {this.props.children}
       </div>
     )
   }
