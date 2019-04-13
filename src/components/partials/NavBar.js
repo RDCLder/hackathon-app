@@ -78,12 +78,12 @@ class NavBar extends React.Component {
         </Col>
         <Col className="my-auto">
           <p style={{display: this.state.isSignedIn ? 'none' : 'block' }}>
-            <button onClick={this.handleSignIn}>
+            <Button className="mt-3" onClick={this.handleSignIn}>
               Sign-in with Blockstack
-            </button>
+            </Button>
           </p>
           <p style={{display: !this.state.isSignedIn ? 'none' : 'block' }}>
-          <Row className="my-3">
+          <Row className="mt-3">
             <Col >
               <UserInfo user={this.state.person} />
             </Col>
