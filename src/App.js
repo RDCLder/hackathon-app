@@ -4,6 +4,9 @@ import './App.css';
 
 import UserInfo from './UserInfo';
 
+import {Redirect} from 'react-router-dom'
+
+
 const blockstack = require('blockstack');
 
 class App extends Component {
@@ -21,8 +24,9 @@ class App extends Component {
       this.loadPerson();
     }
 
+
+
     this.handleSignIn = this.handleSignIn.bind(this)
-    this.handleSignOut = this.handleSignOut.bind(this)
   }
 
   checkSignedInStatus() {
@@ -41,7 +45,7 @@ class App extends Component {
 
     blockstack.lookupProfile(username).then((person) => {
       this.setState({ person })
-    })
+    }).then(window.location.href ='/home')
   }
 
   handleSignIn(event) {
@@ -49,30 +53,34 @@ class App extends Component {
     blockstack.redirectToSignIn()
   }
 
-  handleSignOut(event) {
-    event.preventDefault();
-    blockstack.signUserOut(window.location.href)
-  }
 
   render() {
+
     return (
-      <div className="App">
+      <div className="App" style = {styles.box}>
         <header className="App-header">
           <h1 className="App-title">Blockstack Create React App</h1>
         </header>
-        <p style={{display: this.state.isSignedIn ? 'none' : 'block' }}>
+        <p>
           <button onClick={this.handleSignIn}>
             Sign-in with Blockstack
           </button>
         </p>
-        <p style={{display: !this.state.isSignedIn ? 'none' : 'block' }}>
+        
+        {/* <p style={{display: !this.state.isSignedIn ? 'none' : 'block' }}>
           <UserInfo user={this.state.person} />
           <button onClick={this.handleSignOut}>
             Sign-out
           </button>
-        </p>
+        </p> */}
       </div>
     )
+  }
+}
+
+const styles = {
+  box: {
+    border: 'solid 1px black',
   }
 }
 
