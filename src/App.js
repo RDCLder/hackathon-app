@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-
-import './App.css';
+import { Container, Row, Col } from "react-bootstrap";
+import NavBar from "./components/partials/NavBar";
 
 import UserInfo from './UserInfo';
 
@@ -42,7 +42,6 @@ class App extends Component {
 
   loadPerson() {
     let username = blockstack.loadUserData().username
-
     blockstack.lookupProfile(username).then((person) => {
       this.setState({ person })
     }).then(window.location.href ='/home')
@@ -55,24 +54,19 @@ class App extends Component {
 
 
   render() {
-
     return (
-      <div className="App" style = {styles.box}>
-        <header className="App-header">
-          <h1 className="App-title">Blockstack Create React App</h1>
-        </header>
-        <p>
+      <div>
+        <NavBar />
+        <p style={{display: this.state.isSignedIn ? 'none' : 'block' }}>
           <button onClick={this.handleSignIn}>
             Sign-in with Blockstack
           </button>
         </p>
         
-        {/* <p style={{display: !this.state.isSignedIn ? 'none' : 'block' }}>
+        <p style={{display: !this.state.isSignedIn ? 'none' : 'block' }}>
           <UserInfo user={this.state.person} />
-          <button onClick={this.handleSignOut}>
-            Sign-out
-          </button>
-        </p> */}
+          {this.props.children}
+        </p>
       </div>
     )
   }

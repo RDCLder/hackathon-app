@@ -16,6 +16,7 @@
   "dependencies": {
     "blockstack": "latest",
     "react": "^16.1.1",
+    "react-bootstrap": "^1.0.0-beta.8",
     "react-dom": "^16.1.1",
     "react-router-dom": "^5.0.0",
     "react-scripts": "1.0.17"
