@@ -1,6 +1,8 @@
 import React from "react";
 import { Container, Row, Col, Card, Button, Alert } from "react-bootstrap";
 import AddCard from "../partials/AddCard";
+import { putFile } from 'blockstack';
+// const decks = 'decks.json'
 
 class CreateDeck extends React.Component {
   constructor(props) {
@@ -13,6 +15,9 @@ class CreateDeck extends React.Component {
       alertShow: false
     };
   }
+
+
+  // { word: "", value: "" }
 
   changeDeckName(e) {
     this.setState({
@@ -54,11 +59,15 @@ class CreateDeck extends React.Component {
       });
     } else {
       // Update database
+      let allDecks = {}
+      allDecks = {...allDecks, deckName: []}
+      putFile('decks.json', JSON.stringify(allDecks))
       this.setState({
         deckName: "",
         alertShow: false
-      });
+      })
     }
+
 
     // Closes error alert after 2 seconds
     if (this.state.alertShow === true) {
@@ -106,7 +115,7 @@ class CreateDeck extends React.Component {
 
         <Row>
           <Col>
-            <input></input>
+            <input onChange={e => this.changeDeckName(e)}></input>
           </Col>
           <Col xs={2}>
             <Button variant="primary" onClick={() => this.addDeck()}>
