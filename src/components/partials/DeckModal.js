@@ -10,8 +10,8 @@ class DeckModal extends React.Component {
     }
 
     render() {
-        var cards = this.props.deckinfo.cards.map(card=>{
-            return <CardforModal cardinfo = {card}/>
+        var cards = this.props.deck.map(card=>{
+            return <CardforModal cardInfo = {card}/>
         })
 
         return (
@@ -23,7 +23,7 @@ class DeckModal extends React.Component {
             >
                 <Modal.Header closeButton>
                     <Modal.Title id="contained-modal-title-vcenter">
-                        {this.props.deckinfo.deckName}
+                        {this.props.deckName}
               </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>

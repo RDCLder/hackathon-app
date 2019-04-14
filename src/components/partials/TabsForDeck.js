@@ -25,7 +25,7 @@ class TabsForDeck extends React.Component {
             <Tab eventKey="profile" title="Profile">
               {/* <Sonnet /> */}
             </Tab>
-            <Tab eventKey="contact" title="Contact" disabled>
+            <Tab eventKey="contact" title="Contact">
               {/* <Sonnet /> */}
             </Tab>
           </Tabs>
