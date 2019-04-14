@@ -24,7 +24,6 @@ class AllDecks extends React.Component {
             this.setState({
                 allDecks: allDecks
             });
-            console.log(this.state.allDecks);
         })
     }
     
