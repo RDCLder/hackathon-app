@@ -36,10 +36,10 @@ class App extends Component {
   }
 
   loadPerson() {
-    let username = blockstack.loadUserData().username
-    blockstack.lookupProfile(username).then((person) => {
-      this.setState({ person })
-    })
+    let username = blockstack.loadUserData().username;
+    blockstack.lookupProfile(username).then(person => {
+      this.setState({ person });
+    });
   }
 
   handleSignIn(event) {
@@ -71,3 +71,4 @@ const styles = {
 };
 
 export default App;
+

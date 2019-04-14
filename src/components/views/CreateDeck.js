@@ -1,63 +1,72 @@
-import React from 'react'
-import { Container, Row, Col, Card, Button, Alert } from 'react-bootstrap'
-import AddCard from '../partials/AddCard'
+import React from "react";
+import { Container, Row, Col, Card, Button, Alert } from "react-bootstrap";
+import AddCard from "../partials/AddCard";
+import { putFile } from "blockstack";
+
+const decks = "decks.json";
 
 class CreateDeck extends React.Component {
-  constructor (props) {
-    super(props)
+  constructor(props) {
+    super(props);
 
     this.state = {
-      deckName: '',
+      deckName: "",
       deck: {},
       alertMessage: null,
       alertShow: false
-    }
+    };
   }
 
-  changeDeckName (e) {
+  changeDeckName(e) {
     this.setState({
       deckName: e.target.value
-    })
+    });
   }
 
-  updateDeck (card) {
-    let newDeck = { ...this.state.deck }
-    newDeck[card.word] = card
-    this.setState({ deck: newDeck })
+  updateDeck(card) {
+    let newDeck = { ...this.state.deck };
+    newDeck[card.word] = card;
+    this.setState({ deck: newDeck });
   }
 
-  deleteFromDeck (word) {
-    let newDeck = { ...this.state.deck }
-    delete newDeck[word]
-    this.setState({ deck: newDeck })
+  deleteFromDeck(word) {
+    let newDeck = { ...this.state.deck };
+    delete newDeck[word];
+    this.setState({ deck: newDeck });
   }
 
-  addDeck () {
+  addDeck() {
     // const deckNames = Object.keys(allDecks);
-    const deckNames = []
+    const deckNames = [];
 
     // Error checks for empty name, name over 40 characters, or existing name
-    if (this.state.deckName === '') {
+    if (this.state.deckName === "") {
       this.setState({
         alertMessage: "The deck name can't be empty!",
         alertShow: true
-      })
+      });
     } else if (this.state.deckName.length > 40) {
       this.setState({
         alertMessage: "The deck name can't exceed 40 characters!",
         alertShow: true
-      })
+      });
     } else if (deckNames.includes(this.state.deckName)) {
       this.setState({
-        alertMessage: 'The deck name is already taken!',
+        alertMessage: "The deck name is already taken!",
         alertShow: true
-      })
+      });
     } else {
       // Update database
+      const options = { encrypt: false };
+
+      let deckName = this.state.deckName;
+      let deck = this.state.deck;
+      let newDeck = { deckName, deck };
+      putFile("decks.json", JSON.stringify(newDeck), options);
       this.setState({
-        deckName: '',
+        deckName: "",
         alertShow: false
-      })
+      });
     }
 
     // Closes error alert after 2 seconds
@@ -65,71 +74,31 @@ class CreateDeck extends React.Component {
       setTimeout(() => {
         this.setState({
           alertShow: false,
-          alertMessage: ''
-        })
-      }, 2000)
+          alertMessage: ""
+        });
+      }, 2000);
     }
   }
 
-  render () {
+  render() {
     const deck = Object.values(this.state.deck).map(card => (
       <Card key={card.word}>
         <Card.Body>
           <Card.Title>
             {card.word}
-            <i className='fas fa-times cardButton'
+            <i
+              className="fas fa-times cardButton"
               onClick={() => this.deleteFromDeck(card.word)}
             />
-            <i className='fas fa-pencil-alt cardButton'
-            />
+            <i className="fas fa-pencil-alt cardButton" />
           </Card.Title>
-          <Card.Text className='cardText'>
-            {card.text}
-          </Card.Text>
+          <Card.Text className="cardText">{card.text}</Card.Text>
         </Card.Body>
       </Card>
-    ))
-
-    // ======= this is css style object=============
-    const colorscheme =
-    ['#207b8d',
-      '#00202e',
-      '#527a9c',
-      '#3f5d65',
-      '#335a78']
-
-    const cd = {
-
-      title: {
-        textAlign: 'left',
-        color: '#94dfff',
-        fontWeight: '300',
-        fontSize: '2em'
-
-      },
-      plus: {
-        color: colorscheme[1]
-      },
-      savedeck: {
-        // width: '80%',
-        alignSelf: 'center',
-        padding: '1em'
-
-      },
-      text: {
-        borderTop: '3px dashed grey',
-        marginTop: '0.5em',
-        fontSize: '1em',
-        color: colorscheme[1]
-      },
-      input: {
-        border: 'none'
-      }
-
-    }
+    ));
 
     return (
-      <Container fluid='true'>
+      <Container fluid="true">
         <Container>
           <Row>
             <Col md={6}>
@@ -137,14 +106,14 @@ class CreateDeck extends React.Component {
             </Col>
             <Col md={5}>
               <Alert
-                variant='danger'
+                variant="danger"
                 show={this.state.alertShow}
-                className='alert'
+                className="alert"
               >
                 <Alert.Heading>
-            Error
+                  Error
                   <i
-                    className='fas fa-times alertDismiss'
+                    className="fas fa-times alertDismiss"
                     onClick={() => this.setState({ alertShow: false })}
                   />
                 </Alert.Heading>
@@ -152,39 +121,65 @@ class CreateDeck extends React.Component {
               </Alert>
             </Col>
 
-            <Col xs={4} md={1} >
-              <AddCard style={cd.plus}
+            <Col xs={4} md={1}>
+              <AddCard
+                style={cd.plus}
                 deck={this.state.deck}
                 update={card => this.updateDeck(card)}
               />
             </Col>
-
           </Row>
           <Row>
-            <Col md={11} style={cd.input}><input style={cd.input} block /></Col>
+            <Col md={11} style={cd.input}>
+              <input style={cd.input} block />
+            </Col>
           </Row>
           <Row>
-            <Col md={11} style={cd.text}>Type in the deck name</Col>
+            <Col md={11} style={cd.text}>
+              Type in the deck name
+            </Col>
           </Row>
           <Row>
             <Col md={12}>
-              <Button style={cd.savedeck}
-                onClick={() => this.addDeck()} block>
-              SAVE DECK
+              <Button style={cd.savedeck} onClick={() => this.addDeck()} block>
+                SAVE DECK
               </Button>
             </Col>
           </Row>
         </Container>
 
         <Row>{deck}</Row>
-
       </Container>
-    )
+    );
   }
 }
 
-// <i className="fas fa-save" />
-// <i className="fas fa-trash" />
-// <i className="fas fa-times" />
+// CSS Object
+const colorscheme = ["#207b8d", "#00202e", "#527a9c", "#3f5d65", "#335a78"];
 
-export default CreateDeck
+const cd = {
+  title: {
+    textAlign: "left",
+    color: "#94dfff",
+    fontWeight: "300",
+    fontSize: "2em"
+  },
+  plus: {
+    color: colorscheme[1]
+  },
+  savedeck: {
+    alignSelf: "center",
+    padding: "1em"
+  },
+  text: {
+    borderTop: "3px dashed grey",
+    marginTop: "0.5em",
+    fontSize: "1em",
+    color: colorscheme[1]
+  },
+  input: {
+    border: "none"
+  }
+};
+
+export default CreateDeck;
