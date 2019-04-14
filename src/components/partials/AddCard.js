@@ -1,14 +1,14 @@
-import React from "react";
-import { Container, Row, Col, Modal, Button, Alert } from "react-bootstrap";
+import React from 'react'
+import { Container, Row, Modal, Button, Alert } from 'react-bootstrap'
 
 class AddCard extends React.Component {
-  constructor(props) {
-    super(props);
+  constructor (props) {
+    super(props)
 
     this.state = {
       show: false,
-      word: "",
-      text: "",
+      word: '',
+      text: '',
       alertMessage: null,
       alertShow: false,
       pictures: [] 
@@ -17,61 +17,61 @@ class AddCard extends React.Component {
     this.onDrop = this.onDrop.bind(this);
   }
 
-  changeWord(e) {
-    this.setState({ word: e.target.value });
+  changeWord (e) {
+    this.setState({ word: e.target.value })
   }
 
-  changeText(e) {
-    this.setState({ text: e.target.value });
+  changeText (e) {
+    this.setState({ text: e.target.value })
   }
 
-	handleShow() {
-		this.setState({ show: true })
-	}
+  handleShow () {
+    this.setState({ show: true })
+  }
 
-	handleClose() {
-		this.setState({ show: false })
-	}
+  handleClose () {
+    this.setState({ show: false })
+  }
 
-  handleSubmit() {
-    const words = Object.keys(this.props.deck);
+  handleSubmit () {
+    const words = Object.keys(this.props.deck)
 
     // Error checks for empty word/text, long word/text, or existing word
-    if (this.state.word === "") {
+    if (this.state.word === '') {
       this.setState({
         alertMessage: "The word can't be blank!",
         alertShow: true
-      });
-    } else if (this.state.text === "") {
+      })
+    } else if (this.state.text === '') {
       this.setState({
         alertMessage: "The text can't be blank!",
         alertShow: true
-      });
+      })
     } else if (this.state.word.length > 40) {
       this.setState({
-        alertMessage: "The word cannot exceed 40 characters!",
+        alertMessage: 'The word cannot exceed 40 characters!',
         alertShow: true
-      });
+      })
     } else if (this.state.word.length > 200) {
       this.setState({
-        alertMessage: "The text cannot exceed 200 characters!",
+        alertMessage: 'The text cannot exceed 200 characters!',
         alertShow: true
-      });
+      })
     } else if (words.includes(this.state.word)) {
       this.setState({
         alertMessage: `${this.state.word} has already been used!`
-      });
-      this.setState({ alertShow: true });
+      })
+      this.setState({ alertShow: true })
     } else {
-			this.props.update({
-				word: this.state.word,
-				text: this.state.text
-			});
+      this.props.update({
+        word: this.state.word,
+        text: this.state.text
+      });
       this.setState({
         show: false,
-				alertShow: false,
-				word: "",
-				text: ""
+        alertShow: false,
+        word: "",
+        text: ""
       });
     }
 
@@ -80,9 +80,9 @@ class AddCard extends React.Component {
       setTimeout(() => {
         this.setState({
           alertShow: false,
-          alertMessage: ""
-        });
-      }, 2000);
+          alertMessage: ''
+        })
+      }, 2000)
     }
   }
   onDrop(picture) {
@@ -91,37 +91,37 @@ class AddCard extends React.Component {
     });
   }
 
-  render() {
+  render () {
     return (
       <React.Fragment>
-
         <Button
           style={Object.assign({}, styles.floatingButton, styles.addButton)}
           
           onClick={() => this.handleShow()}
+          // style={[styles.floatButton, styles.addButton]}
         >
-          <i className="fas fa-plus" />
+          <i className='fas fa-plus' />
         </Button>
 
         <Modal
           show={this.state.show}
           onHide={()=>{this.handleClose()}}
           centered
-          size="lg"
+          size='lg'
         >
           <Modal.Header>
             <Modal.Title>Add Card</Modal.Title>
             <i
-              className="fas fa-times modalDismiss"
+              className='fas fa-times modalDismiss'
               onClick={() => this.handleClose()}
             />
           </Modal.Header>
           <Modal.Body>
-            <Container id="AddCardModalContainer">
+            <Container id='AddCardModalContainer'>
               <Row>
                 <h5>Word</h5>
               </Row>
-              <Row className="mb-4">
+              <Row className='mb-4'>
                 <textarea
                   style={styles.width100}
                   type="text"
@@ -156,22 +156,21 @@ class AddCard extends React.Component {
         </Modal>
 
         <Alert
-          variant="danger"
+          variant='danger'
           show={this.state.alertShow}
-          className="alert"
+          className='alert'
         >
           <Alert.Heading>
             Error
             <i
-              className="fas fa-times alertDismiss"
+              className='fas fa-times alertDismiss'
               onClick={() => this.setState({ alertShow: false })}
             />
           </Alert.Heading>
           <p>{this.state.alertMessage}</p>
         </Alert>
-
       </React.Fragment>
-    );
+    )
   }
 }
 

@@ -7,23 +7,34 @@ import UserInfo from "./UserInfo";
 const blockstack = require("blockstack");
 
 class App extends Component {
-  // constructor(props) {
-  //   super(props);
+  constructor(props) {
+    super(props);
 
-  //   let isSignedIn = this.checkSignedInStatus();
+    // let isSignedIn = this.checkSignedInStatus();
 
-  //   this.state = {
-  //     isSignedIn,
-  //     person: undefined
-  //   };
+    // this.state = {
+    //   isSignedIn,
+    //   person: undefined
+    // };
 
-  //   if (isSignedIn) {
-  //     this.loadPerson();
-  //   }
+    // if (isSignedIn) {
+    //   this.loadPerson();
+    //   console.log(this.state.person)
 
-  //   this.handleSignIn = this.handleSignIn.bind(this);
+    // }
+
+    // this.handleSignIn = this.handleSignIn.bind(this);
+  }
+  // componentDidMount(){
+
   // }
-
+  // fetchData(){
+  //   const options = { decrypt: false };
+  //   getFile("allDecks.json", options).then(file => {
+  //     const allDecks = JSON.parse(file || "{}");
+  //     this.setState({ allDecks: allDecks });
+  //   });
+  // }
   // checkSignedInStatus() {
   //   if (blockstack.isUserSignedIn()) {
   //     return true;
@@ -51,6 +62,9 @@ class App extends Component {
     return (
       <React.Fragment>
         <NavBar />
+        <div style={styles.title}>
+          WELCOME TO CRAMSTACK
+        </div>
         {this.props.children}
       </React.Fragment>
     );
@@ -60,6 +74,10 @@ class App extends Component {
 const styles = {
   box: {
     border: "solid 1px black"
+  },
+  title: {
+    fontSize: '5em',
+    textAlign: 'center'
   }
 };
 

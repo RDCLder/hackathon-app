@@ -1,8 +1,8 @@
 import React from "react";
 import { Container, Row, Col, Card, Button, Alert, InputGroup, FormControl } from "react-bootstrap";
 import AddCard from "../partials/AddCard";
-import { putFile, getFile } from 'blockstack';
-const decks = 'allDecks.json'
+import { putFile, getFile } from "blockstack";
+const decks = "allDecks.json";
 
 
 class CreateDeck extends React.Component {
@@ -14,7 +14,8 @@ class CreateDeck extends React.Component {
       deckName: "",
       deck: {},
       alertMessage: null,
-      alertShow: false
+      alertErrorShow: false,
+      alertSuccessShow: false
     };
   }
 
@@ -23,12 +24,11 @@ class CreateDeck extends React.Component {
   }
 
   fetchData() {
-    const options = { decrypt: false }
-    getFile('allDecks.json', options)
-    .then(file => {
-      const allDecks = JSON.parse(file || '{}');
+    const options = { decrypt: false };
+    getFile("allDecks.json", options).then(file => {
+      const allDecks = JSON.parse(file || "{}");
       this.setState({ allDecks: allDecks });
-    })
+    });
   }
 
   changeDeckName(e) {
@@ -38,59 +38,59 @@ class CreateDeck extends React.Component {
   }
 
   updateDeck(card) {
-    let newDeck = {...this.state.deck};
+    let newDeck = { ...this.state.deck };
     newDeck[card.word] = card;
     this.setState({ deck: newDeck });
   }
 
   deleteFromDeck(word) {
-    let newDeck = {...this.state.deck};
+    let newDeck = { ...this.state.deck };
     delete newDeck[word];
     this.setState({ deck: newDeck });
   }
 
   addDeck() {
-		const deckNames = Object.keys(this.state.allDecks);
+    const deckNames = Object.keys(this.state.allDecks);
 
     // Error checks for empty name, name over 40 characters, or existing name
     if (this.state.deckName === "") {
       this.setState({
         alertMessage: "The deck name can't be empty!",
-        alertShow: true
+        alertErrorShow: true
       });
     } else if (this.state.deckName.length > 40) {
       this.setState({
         alertMessage: "The deck name can't exceed 40 characters!",
-        alertShow: true
+        alertErrorShow: true
       });
     } else if (deckNames.includes(this.state.deckName)) {
       this.setState({
         alertMessage: "The deck name is already taken!",
-        alertShow: true
+        alertErrorShow: true
       });
     } else {
       // Update database
-      const options = { encrypt: false }
+      const options = { encrypt: false };
       const deckName = this.state.deckName;
-      let newDecks = {...this.state.allDecks};
+      let newDecks = { ...this.state.allDecks };
       newDecks[deckName] = this.state.deck;
-      putFile('allDecks.json', JSON.stringify(newDecks), options);
+      putFile("allDecks.json", JSON.stringify(newDecks), options);
       this.setState({
+        alertSuccessShow: true,
+        alertMessage: "Deck saved!",
         deckName: "",
-        alertShow: false
+        deck: {}
       });
     }
 
-
     // Closes error alert after 2 seconds
-    if (this.state.alertShow === true) {
-      setTimeout(() => {
-        this.setState({
-          alertShow: false,
-          alertMessage: ""
-        });
-      }, 2000);
-    }
+    setTimeout(() => {
+      this.setState({
+        alertErrorShow: false,
+        alertSuccessShow: false,
+        alertMessage: ""
+      });
+    }, 2000);
   }
 
   render() {
@@ -162,23 +162,38 @@ class CreateDeck extends React.Component {
         <AddCard
           deck={this.state.deck}
           update={card => this.updateDeck(card)}
+          style={styles.plus}
         />
 
         <Alert
           variant="danger"
-          show={this.state.alertShow}
+          show={this.state.alertErrorShow}
           className="alert"
         >
           <Alert.Heading>
             Error
             <i
               className="fas fa-times alertDismiss"
-              onClick={() => this.setState({ alertShow: false })}
+              onClick={() => this.setState({ alertErrorShow: false })}
             />
           </Alert.Heading>
           <p>{this.state.alertMessage}</p>
         </Alert>
 
+        <Alert
+          variant="success"
+          show={this.state.alertSuccessShow}
+          className="alert"
+        >
+          <Alert.Heading>
+            Success
+            <i
+              className="fas fa-times alertDismiss"
+              onClick={() => this.setState({ alertSuccessShow: false })}
+            />
+          </Alert.Heading>
+          <p>{this.state.alertMessage}</p>
+        </Alert>
       </Container>
     );
   }

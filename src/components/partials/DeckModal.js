@@ -30,13 +30,19 @@ class DeckModal extends React.Component {
                     {cards}
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button onClick={this.props.onHide}>Close</Button>
+                    <Button style={styles.button} onClick={this.props.onHide}>Close</Button>
                 </Modal.Footer>
             </Modal>
         );
     }
 }
-
+const styles = {
+    button:{
+        backgroundColor: 'rgb(50,50,50)',
+        color: 'white',
+        border: 'none'
+    }
+}
 
 DeckModal.propTypes = {
 
