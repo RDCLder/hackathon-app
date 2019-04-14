@@ -96,7 +96,7 @@ class AddCard extends React.Component {
 
         <Modal
           show={this.state.show}
-          onHide={this.handleClose}
+          onHide={()=>{this.handleClose()}}
           centered
           size="lg"
         >

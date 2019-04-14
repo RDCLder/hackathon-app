@@ -67,25 +67,25 @@ class NavBar extends React.Component {
             <h2>App Name</h2>
           </Link>
         </Col>
-        <Col className="my-auto">
+        <Col style={{display: !this.state.isSignedIn ? 'none' : 'block' }} className="my-auto">
           <Link to="/create">
             <h4>CreateDeck</h4>
           </Link>
         </Col>
-        <Col className="my-auto">
+        <Col style={{display: !this.state.isSignedIn ? 'none' : 'block' }} className="my-auto">
           <Link to="/all">
             <h4>AllDecks</h4>
           </Link>
         </Col>
         <Col className="my-auto">
-          <p style={{display: this.state.isSignedIn ? 'none' : 'block' }}>
+          <div style={{display: this.state.isSignedIn ? 'none' : 'block' }}>
             <Button className="mt-3" onClick={this.handleSignIn}>
               Sign-in with Blockstack
             </Button>
-          </p>
-          <p style={{display: !this.state.isSignedIn ? 'none' : 'block' }}>
-          <Row className="mt-3">
-            <Col >
+          </div>
+          <div style={{display: !this.state.isSignedIn ? 'none' : 'block' }}>
+          <Row>
+            <Col className = "mt-1" >
               <UserInfo user={this.state.person} />
             </Col>
             <Col>
@@ -94,7 +94,7 @@ class NavBar extends React.Component {
               </Button>            
             </Col>
           </Row>
-          </p>
+          </div>
         </Col>
         <Col xs={1} className="my-auto" />
       </Row>
