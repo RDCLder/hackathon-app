@@ -1,17 +1,33 @@
 import React from "react";
 import { Container, Row, Col, Card, Button, Alert } from "react-bootstrap";
 import AddCard from "../partials/AddCard";
+import { putFile, getFile } from 'blockstack';
+const decks = 'allDecks.json'
 
 class CreateDeck extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      allDecks: {},
       deckName: "",
-      deck: [],
+      deck: {},
       alertMessage: null,
       alertShow: false
     };
+  }
+
+  componentDidMount() {
+    this.fetchData();
+  }
+
+  fetchData() {
+    const options = { decrypt: false }
+    getFile('allDecks.json', options)
+    .then(file => {
+      const allDecks = JSON.parse(file || '{}');
+      this.setState({ allDecks: allDecks });
+    })
   }
 
   changeDeckName(e) {
@@ -21,20 +37,19 @@ class CreateDeck extends React.Component {
   }
 
   updateDeck(card) {
-    this.setState({
-      deck: this.state.deck.concat(card)
-    });
+    let newDeck = {...this.state.deck};
+    newDeck[card.word] = card;
+    this.setState({ deck: newDeck });
   }
 
   deleteFromDeck(word) {
-    let newDeck = this.state.deck.slice();
+    let newDeck = {...this.state.deck};
     delete newDeck[word];
     this.setState({ deck: newDeck });
   }
 
   addDeck() {
-		// const deckNames = Object.keys(allDecks);
-		const deckNames = [];
+		const deckNames = Object.keys(this.state.allDecks);
 
     // Error checks for empty name, name over 40 characters, or existing name
     if (this.state.deckName === "") {
@@ -54,11 +69,17 @@ class CreateDeck extends React.Component {
       });
     } else {
       // Update database
+      const options = { encrypt: false }
+      const deckName = this.state.deckName;
+      let newDecks = {...this.state.allDecks};
+      newDecks[deckName] = this.state.deck;
+      putFile('allDecks.json', JSON.stringify(newDecks), options);
       this.setState({
         deckName: "",
         alertShow: false
       });
     }
+
 
     // Closes error alert after 2 seconds
     if (this.state.alertShow === true) {
@@ -79,7 +100,7 @@ class CreateDeck extends React.Component {
 		// 		delete={word => this.deleteFromDeck(word)}
 		// 	/>
 
-			const deck = this.state.deck.map(card => (
+			const deck = Object.values(this.state.deck).map(card => (
 				<Card key={card.word}>
 					<Card.Body>
 							<Card.Title>
@@ -106,7 +127,7 @@ class CreateDeck extends React.Component {
 
         <Row>
           <Col>
-            <input></input>
+            <input onChange={e => this.changeDeckName(e)}></input>
           </Col>
           <Col xs={2}>
             <Button variant="primary" onClick={() => this.addDeck()}>

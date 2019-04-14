@@ -30,8 +30,8 @@ class AddCard extends React.Component {
 		this.setState({ show: false })
 	}
 
-  addCard() {
-    const words = this.props.deck.map(card => card.word);
+  handleSubmit() {
+    const words = Object.keys(this.props.deck);
 
     // Error checks for empty word/text, long word/text, or existing word
     if (this.state.word === "") {
@@ -60,7 +60,7 @@ class AddCard extends React.Component {
       });
       this.setState({ alertShow: true });
     } else {
-			this.props.updateDeck({
+			this.props.update({
 				word: this.state.word,
 				text: this.state.text
 			});
