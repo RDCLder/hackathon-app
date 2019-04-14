@@ -46,8 +46,9 @@ const styles = {
         boxShadow: '1px 1px 3px 1px'
     },
     title: {
-        fontWeight: 'bold',
-        fontSize: '2em',
+        fontFamily: "Verdana, Geneva, sans-serif",
+        fontWeight: '500',
+        fontSize: '1.8em',
         paddingTop: '5px',
         display:'flex',
     },
