@@ -22,7 +22,8 @@ class AllDecks extends React.Component {
         .then((file)=> {
             const allDecks = JSON.parse(file || '{}');
             this.setState({
-                allDecks: allDecks
+                allDecks: 
+                allDecks
             });
         })
     }

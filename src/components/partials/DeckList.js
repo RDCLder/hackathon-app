@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'; 
 import Deck from './Deck';
 
 class DeckList extends React.Component {
