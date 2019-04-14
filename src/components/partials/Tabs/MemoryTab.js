@@ -28,7 +28,7 @@ class DeckTabHome extends React.Component {
 			}
 		}
 		let newSelected = this.state.selected.slice();
-		newSelected.append(i);
+		// newSelected.append(i);
 		this.setState({ selected: newSelected}, () => {
 
 		});
@@ -53,11 +53,7 @@ class DeckTabHome extends React.Component {
     return (
       <Container>
 
-        <FlippableCard
-          deck={this.props.deck}
-					front="Cramstack"
-					back={}
-        />
+			{/* {cards} */}
 
       </Container>
     );

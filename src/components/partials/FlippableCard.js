@@ -7,7 +7,7 @@ class FlippableCard extends React.Component {
     return (
       <Flippy
         flipOnClick={this.props.flipOnClick} // default false
-        flipDirection="verticle" // horizontal or vertical
+        flipDirection="vertical" // horizontal or vertical
         ref={r => (this.flippy = r)} // to use toggle method like this.flippy.toggle()
         // if you pass isFlipped prop component will be controlled component.
         // and other props, which will go to div

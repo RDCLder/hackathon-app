@@ -2,6 +2,7 @@ import React from "react";
 import { Tabs, Tab } from "react-bootstrap";
 import HomeTab from "./HomeTab";
 import MemoryTab from "./MemoryTab";
+import FIBTab from "./FIBTab"
 
 class TabsForDeck extends React.Component {
   constructor(props) {
@@ -27,12 +28,12 @@ class TabsForDeck extends React.Component {
           {/* <MatchTab deck={this.props.deck} /> */}
         </Tab>
 
-        <Tab eventKey="fill" title="Fill in the Blank" style={styles.tabs} disabled>
-          {/* <FillTab deck={this.props.deck} /> */}
+        <Tab eventKey="fill" title="Fill in the Blank" style={styles.tabs}>
+          <FIBTab deck={this.props.deck} />
         </Tab>
 
         <Tab eventKey="memory" title="Memory Game" style={styles.tabs}>
-          <MemoryTab deck={this.props.deck} />
+          {/* <MemoryTab deck={this.props.deck} /> */}
         </Tab>
 
         <Tab eventKey="crossword" title="Crossword Puzzle" style={styles.tabs} disabled>
