@@ -5,10 +5,7 @@ import UserInfo from '../../UserInfo';
 
 const blockstack = require('blockstack');
 
-const navbarStyle = {
-  backgroundColor: "black",
-  color: "white"
-}
+
 
 class NavBar extends React.Component {
   constructor(props) {
@@ -60,26 +57,26 @@ class NavBar extends React.Component {
 
   render() {
     return (
-      <Row style={navbarStyle}>
+      <Row style={styles.navbarStyle}>
         <Col xs={1} className="my-auto" />
         <Col className="my-auto">
-          <Link to="/">
+          <Link style={styles.navbarStyle} to="/">
             <h2>App Name</h2>
           </Link>
         </Col>
         <Col style={{display: !this.state.isSignedIn ? 'none' : 'block' }} className="my-auto">
-          <Link to="/create">
+          <Link style={styles.navbarStyle} to="/create">
             <h4>CreateDeck</h4>
           </Link>
         </Col>
         <Col style={{display: !this.state.isSignedIn ? 'none' : 'block' }} className="my-auto">
-          <Link to="/all">
+          <Link style={styles.navbarStyle} to="/all">
             <h4>AllDecks</h4>
           </Link>
         </Col>
         <Col className="my-auto">
           <div style={{display: this.state.isSignedIn ? 'none' : 'block' }}>
-            <Button className="mt-3" onClick={this.handleSignIn}>
+            <Button style={styles.button} className="mt-3" onClick={this.handleSignIn}>
               Sign-in with Blockstack
             </Button>
           </div>
@@ -89,7 +86,7 @@ class NavBar extends React.Component {
               <UserInfo user={this.state.person} />
             </Col>
             <Col>
-              <Button onClick={this.handleSignOut}>
+              <Button style={styles.button} onClick={this.handleSignOut}>
                 Sign-out
               </Button>            
             </Col>
@@ -103,3 +100,19 @@ class NavBar extends React.Component {
 }
 
 export default NavBar;
+
+const styles = {
+  navbarStyle: {
+    backgroundColor: "black",
+    color: "white",
+    fontFamily: "Verdana, Geneva, sans-serif",
+    height: '60px',
+    width: '100%',
+    margin: '0',
+  },
+  button: {
+    backgroundColor: 'black',
+    border: 'none',
+    height: '100%'
+  },
+}

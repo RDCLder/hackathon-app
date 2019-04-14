@@ -88,7 +88,8 @@ class AddCard extends React.Component {
       <React.Fragment>
 
         <Button
-					variant="primary"
+          style={Object.assign({}, styles.floatingButton, styles.addButton)}
+          
           onClick={() => this.handleShow()}
         >
           <i className="fas fa-plus" />
@@ -114,6 +115,7 @@ class AddCard extends React.Component {
               </Row>
               <Row className="mb-4">
                 <textarea
+                  style={styles.width100}
                   type="text"
                   placeholder="Word goes here"
                   rows="1"
@@ -125,6 +127,7 @@ class AddCard extends React.Component {
               </Row>
               <Row>
                 <textarea
+                  style={styles.width100}
                   type="text"
                   placeholder="Text goes here"
                   rows="5"
@@ -162,5 +165,31 @@ class AddCard extends React.Component {
     );
   }
 }
+
+const styles = {
+  floatingButton: {
+    position: 'fixed',
+    background: 'black',
+    color: 'white',
+    right: '30px',
+    width: '70px',
+    height: '70px',
+    borderRadius: '50%',
+    textAlign: 'center',
+    boxShadow: '2px 2px 4px #999',
+    fontSize: '30px',
+    zIndex: '2',
+    border: 'none',
+  },
+  addButton: {
+    bottom: "30px",
+  },
+  width100: {
+    width: "100%"
+  },
+  hover: {
+    color: 'grey',
+  }
+};
 
 export default AddCard;

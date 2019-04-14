@@ -1,8 +1,9 @@
 import React from "react";
-import { Container, Row, Col, Card, Button, Alert } from "react-bootstrap";
+import { Container, Row, Col, Card, Button, Alert, InputGroup, FormControl } from "react-bootstrap";
 import AddCard from "../partials/AddCard";
 import { putFile, getFile } from 'blockstack';
 const decks = 'allDecks.json'
+
 
 class CreateDeck extends React.Component {
   constructor(props) {
@@ -101,19 +102,28 @@ class CreateDeck extends React.Component {
 		// 	/>
 
 			const deck = Object.values(this.state.deck).map(card => (
-				<Card key={card.word}>
-					<Card.Body>
-							<Card.Title>
-									{card.word}
-									<i className="fas fa-times cardButton"
-											onClick={() => this.deleteFromDeck(card.word)}
-									/>
-									<i className="fas fa-pencil-alt cardButton"
-									/>
+				<Card style={styles.deckCard} key={card.word}>
+					<Card.Body style={styles.verticalScroll}>
+							<Card.Title className="mb-1">
+                <Row>
+                  <Col xs={9} >
+                    {card.word}									
+                  </Col>
+                  <Col xs={3}>
+                    <Row>
+                      <i style={styles.icon} className="fas fa-times cardButton"
+                        onClick={() => this.deleteFromDeck(card.word)}
+                      />
+                      <i style={styles.icon} className="fas fa-pencil-alt cardButton"
+                      />
+                    </Row>
+                  </Col>
+                </Row>
+									
 							</Card.Title>
-							<Card.Text className="cardText">
-									{card.text}
-							</Card.Text>
+              <Card.Text style={styles.borderTop} className="cardText">
+                  {card.text}
+              </Card.Text>
 					</Card.Body>
 			</Card>
 		));
@@ -121,22 +131,33 @@ class CreateDeck extends React.Component {
     return (
       <Container fluid="true">
 
-        <Row>
-          <h3>Create New Deck</h3>
+        <Row className="m-auto pt-4"> 
+          <h3 style={styles.title}>Create New Deck</h3>
         </Row>
 
         <Row>
           <Col>
-            <input onChange={e => this.changeDeckName(e)}></input>
+            <InputGroup className="mb-3">
+              <InputGroup.Prepend>
+                <InputGroup.Text id="inputGroup-sizing-default">Deck Title </InputGroup.Text>
+              </InputGroup.Prepend>
+              <FormControl
+                aria-label="Default"
+                aria-describedby="inputGroup-sizing-default"
+                onChange={e => this.changeDeckName(e)}
+                placeholder="Title goes here"
+              />
+            </InputGroup>
+            {/* <input onChange={e => this.changeDeckName(e)}></input> */}
           </Col>
           <Col xs={2}>
-            <Button variant="primary" onClick={() => this.addDeck()}>
+            <Button style={styles.button} onClick={() => this.addDeck()}>
               SAVE DECK
             </Button>
           </Col>
         </Row>
 
-        <Row>{deck}</Row>
+        <Row style={styles.greyOverlay}>{deck}</Row>
 
         <AddCard
           deck={this.state.deck}
@@ -162,7 +183,38 @@ class CreateDeck extends React.Component {
     );
   }
 }
-
+const styles = {
+  deckCard : {
+    height: '300px',
+    width: '300px',
+    margin: '20px',
+    boxShadow: '1px 1px 2px #999',
+  },
+  verticalScroll : {
+    overflowY: 'scroll',
+  },
+  icon : {
+    marginLeft: '3px',
+    marginRight: '3px',
+    float: 'right',
+  },
+  greyOverlay: {
+    backgroundColor: 'rgb(200, 200, 200)',
+  },
+  title : {
+    fontFamily: "Verdana, Geneva, sans-serif",
+    fontSize: '1.5em',
+  },
+  button: {
+    backgroundColor: 'black',
+    border: 'none',
+  },
+  borderTop : {
+    paddingTop: '5px',
+    background:'linear-gradient(rgb(225, 225, 225),rgb(240, 240, 240)) top no-repeat',
+    backgroundSize:'100% 3px',
+  }
+}
 // <i className="fas fa-save" />
 // <i className="fas fa-trash" />
 // <i className="fas fa-times" />
