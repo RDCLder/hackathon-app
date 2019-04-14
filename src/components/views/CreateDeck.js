@@ -1,7 +1,7 @@
 import React from "react";
 import { Container, Row, Col, Card, Button, Alert } from "react-bootstrap";
 import AddCard from "../partials/AddCard";
-import { putFile } from 'blockstack';
+import { putFile, getFileUrl } from 'blockstack';
 const decks = 'decks.json'
 
 class CreateDeck extends React.Component {
@@ -32,7 +32,7 @@ class CreateDeck extends React.Component {
   }
 
   deleteFromDeck(word) {
-    let newDeck = this.state.deck.slice();
+    let newDeck = {...this.state.deck};
     delete newDeck[word];
     this.setState({ deck: newDeck });
   }
@@ -69,6 +69,7 @@ class CreateDeck extends React.Component {
         deckName: "",
         alertShow: false
       })
+      getFileUrl('decks.json')
     }
 
 

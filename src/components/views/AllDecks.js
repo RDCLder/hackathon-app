@@ -15,9 +15,9 @@ class AllDecks extends React.Component {
     componentDidMount() {
         this.fetchData()
     }
-    
+
     fetchData(){
-        const options = { decrypt: false, zoneFileLookupURL: 'https://hub.blockstack.ofi'}
+        const options = { decrypt: false }
         getFile('decks.json', options)
         .then((file)=> {
             var decks = JSON.parse(file || '{}')
@@ -27,10 +27,12 @@ class AllDecks extends React.Component {
             });
             console.log(this.state.allDecks)
         })
-        
     }
+
+
     
     render() {
+        console.log(this.state.allDecks)
         return (
             <div>
                 <div>

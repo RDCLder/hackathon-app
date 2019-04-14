@@ -54,11 +54,6 @@ class NavBar extends React.Component {
 
   handleSignOut(event) {
     event.preventDefault();
-    blockstack.signUserOut(window.location.href)
-  }
-
-  handleSignOut(event) {
-    event.preventDefault();
     blockstack.signUserOut('/')
   }
 
