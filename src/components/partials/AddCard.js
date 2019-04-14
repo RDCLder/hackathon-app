@@ -89,7 +89,7 @@ class AddCard extends React.Component {
         <Button
           variant="primary"
           onClick={() => this.handleShow()}
-          style={[styles.floatButton, styles.addButton]}
+          // style={[styles.floatButton, styles.addButton]}
         >
           <i className='fas fa-plus' />
         </Button>
