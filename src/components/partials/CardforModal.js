@@ -8,11 +8,11 @@ class CardforModal extends React.Component {
             <div style = {styles.cardRow}>
                 <Card style = {styles.card}>
                     <div style = {styles.cardHeader}>Question</div>
-                    <div style = {styles.content}>{this.props.cardinfo.question}</div>
+                    <div style = {styles.content}>{this.props.cardInfo.word}</div>
                 </Card >
                 <Card style = {styles.card}>
                     <div style = {styles.cardHeader}>Answer</div>
-                    <div style = {styles.content}>{this.props.cardinfo.answer}</div>
+                    <div style = {styles.content}>{this.props.cardInfo.text}</div>
                 </Card>
             </div>
         );
