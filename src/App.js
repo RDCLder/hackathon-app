@@ -51,14 +51,6 @@ class App extends Component {
     return (
       <React.Fragment>
         <NavBar />
-        {/* <div style={{ display: this.state.isSignedIn ? "none" : "block" }}>
-          <button onClick={this.handleSignIn}>Sign-in with Blockstack</button>
-        </div> */}
-
-        {/* <div style={{ display: !this.state.isSignedIn ? "none" : "block" }}>
-          <UserInfo user={this.state.person} />
-          {this.props.children}
-        </div> */}
         {this.props.children}
       </React.Fragment>
     );

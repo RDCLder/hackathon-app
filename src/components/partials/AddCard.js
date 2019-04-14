@@ -63,13 +63,13 @@ class AddCard extends React.Component {
       this.props.update({
         word: this.state.word,
         text: this.state.text
-      })
+      });
       this.setState({
         show: false,
         alertShow: false,
-        word: '',
-        text: ''
-      })
+        word: "",
+        text: ""
+      });
     }
 
     // Closes error alert after 2 seconds
@@ -86,10 +86,10 @@ class AddCard extends React.Component {
   render () {
     return (
       <React.Fragment>
-
         <Button
-          variant='primary'
+          variant="primary"
           onClick={() => this.handleShow()}
+          style={[styles.floatButton, styles.addButton]}
         >
           <i className='fas fa-plus' />
         </Button>
@@ -157,10 +157,9 @@ class AddCard extends React.Component {
           </Alert.Heading>
           <p>{this.state.alertMessage}</p>
         </Alert>
-
       </React.Fragment>
     )
   }
 }
 
-export default AddCard
+export default AddCard;

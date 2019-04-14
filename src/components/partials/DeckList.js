@@ -1,42 +1,21 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import Deck from './Deck';
 
 class DeckList extends React.Component {
-    constructor(props) {
-        super(props);
-        
-        this.state = {
-            decks: [{deckName: 'food', 
-                    cards:[
-                        {question:'1', answer: '1'},
-                        {question:'2', answer: '2'},
-                        {question:'3', answer: '3'}        
-                        ]
-                    },{deckName: 'movies', 
-                    cards:[
-                        {question:'1', answer: '1'},
-                        {question:'2', answer: '2'},
-                        {question:'3', answer: '3'}        
-                        ]
-                    },{deckName: 'shows', 
-                    cards:[
-                        {question:'1', answer: '1'},
-                        {question:'2', answer: '2'},
-                        {question:'3', answer: '3'}        
-                        ]
-                    }
-
-        ]
-    }
-    }
 
     render() {
-        var decklist = this.state.decks.map((deck, i) => {
-            return <Deck key = {i} deckinfo = {deck}/>
-        })
+        const deckNames = Object.keys(this.props.allDecks);
+        const decklist = deckNames.map(deckName => (
+            <Deck key={deckName}
+                deckName={deckName}
+                deck={Object.values(this.props.allDecks[deckName])}
+                numberOfCards = {Object.values(this.props.allDecks[deckName]).length}
+            />
+        ));
+
+
         return (
-            <div style = {styles.decklist}>
+            <div style={styles.decklist}>
                 {decklist}
             </div>
         );
@@ -45,12 +24,8 @@ class DeckList extends React.Component {
 
 const styles = {
     decklist: {
-        margin:'40px'
+        margin: '40px'
     }
 }
 
-DeckList.propTypes = {
-    
-};
-
-export default DeckList
+export default DeckList;

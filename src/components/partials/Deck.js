@@ -13,14 +13,13 @@ class Deck extends React.Component {
 
     render() {
 
-        const link = `/deck/${this.props.deckinfo.deckName}`
+        const link = `/deck/${this.props.deckName}`
         let modalClose = () => this.setState({ modalShow: false });
-
         return (
             <Card style={styles.card}>
-                <Card.Body>{this.props.deckinfo.cards.length} terms</Card.Body>
+                <Card.Body>{this.props.numberOfCards} term(s)</Card.Body>
                 <div style={styles.title}>
-                    <Card.Body style = {styles.justifyBetween}>{this.props.deckinfo.deckName}
+                    <Card.Body style = {styles.justifyBetween}>{this.props.deckName}
                         <div style = {styles.buttonContainer}>
                             <Link to={link}>
                                 <Button style={styles.button}>Go to Deck</Button>
@@ -30,11 +29,12 @@ class Deck extends React.Component {
                     </Card.Body>
                 </div>
                 <DeckModal 
-                deckinfo = {this.props.deckinfo}
+                deckName = {this.props.deckName}
+                deck = {this.props.deck}
                 show={this.state.modalShow}
                 onHide={modalClose}
                 />
-                
+
             </Card>
         );
     }
@@ -59,7 +59,8 @@ const styles = {
     },
     justifyBetween: {
         display:'flex',
-        justifyContent:'space-between'
+        justifyContent:'space-between',
+        paddingTop:'10px'
     }
 }
 
