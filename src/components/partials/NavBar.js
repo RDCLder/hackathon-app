@@ -52,6 +52,7 @@ class NavBar extends React.Component {
     blockstack.redirectToSignIn()
   }
 
+
   handleSignOut(event) {
     event.preventDefault();
     blockstack.signUserOut('/')

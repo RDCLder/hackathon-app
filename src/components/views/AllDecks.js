@@ -18,7 +18,7 @@ class AllDecks extends React.Component {
 
     fetchData(){
         const options = { decrypt: false }
-        getFile('decks.json', options)
+        getFile('allDecks.json', options)
         .then((file)=> {
             var decks = JSON.parse(file || '{}')
             console.log(decks);
@@ -28,8 +28,6 @@ class AllDecks extends React.Component {
             console.log(this.state.allDecks)
         })
     }
-
-
     
     render() {
         console.log(this.state.allDecks)

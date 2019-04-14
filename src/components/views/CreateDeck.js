@@ -1,14 +1,15 @@
 import React from "react";
 import { Container, Row, Col, Card, Button, Alert } from "react-bootstrap";
 import AddCard from "../partials/AddCard";
-import { putFile, getFileUrl } from 'blockstack';
-const decks = 'decks.json'
+import { putFile, getFile } from 'blockstack';
+const decks = 'allDecks.json'
 
 class CreateDeck extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      allDecks: {},
       deckName: "",
       deck: {},
       alertMessage: null,
@@ -16,8 +17,18 @@ class CreateDeck extends React.Component {
     };
   }
 
+  componentDidMount() {
+    this.fetchData();
+  }
 
-  // { word: "", value: "" }
+  fetchData() {
+    const options = { decrypt: false }
+    getFile('allDecks.json', options)
+    .then(file => {
+      const allDecks = JSON.parse(file || '{}');
+      this.setState({ allDecks: allDecks });
+    })
+  }
 
   changeDeckName(e) {
     this.setState({
@@ -38,8 +49,7 @@ class CreateDeck extends React.Component {
   }
 
   addDeck() {
-		// const deckNames = Object.keys(allDecks);
-		const deckNames = [];
+		const deckNames = Object.keys(this.state.allDecks);
 
     // Error checks for empty name, name over 40 characters, or existing name
     if (this.state.deckName === "") {
@@ -60,16 +70,14 @@ class CreateDeck extends React.Component {
     } else {
       // Update database
       const options = { encrypt: false }
-
-      let deckName = this.state.deckName
-      let deck = this.state.deck
-      let newDeck = {deckName, deck}
-      putFile('decks.json', JSON.stringify(newDeck), options)
+      const deckName = this.state.deckName;
+      let newDecks = {...this.state.allDecks};
+      newDecks[deckName] = this.state.deck;
+      putFile('allDecks.json', JSON.stringify(newDecks), options);
       this.setState({
         deckName: "",
         alertShow: false
-      })
-      getFileUrl('decks.json')
+      });
     }
 
 
