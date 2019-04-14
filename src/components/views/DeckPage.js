@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import TabsforDeck from '../partials/TabsForDeck';
+import DeckTabs from '../partials/Tabs/DeckTabs';
 import { getFile } from 'blockstack';
 
 
@@ -9,7 +9,7 @@ class DeckPage extends React.Component {
         super(props);
         this.state = {
             key: 'home',
-            deck:{}
+            deck: {}
         };
     }
 
@@ -33,7 +33,7 @@ class DeckPage extends React.Component {
     render() {
         return (
             <div>
-                <TabsforDeck deck = {this.state.deck}/>
+                <DeckTabs deck = {this.state.deck}/>
             </div>
         );
     }

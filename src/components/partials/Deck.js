@@ -22,7 +22,7 @@ class Deck extends React.Component {
                     <Card.Body style = {styles.justifyBetween}>{this.props.deckName}
                         <div style = {styles.buttonContainer}>
                             <Link to={link}>
-                                <Button style={styles.button}>Go to Deck</Button>
+                                <Button style={styles.button}>Use Deck</Button>
                             </Link>
                             <Button style={styles.button} onClick={() => this.setState({ modalShow: true })}>View Cards</Button>
                         </div>
