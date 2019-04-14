@@ -121,6 +121,9 @@ class CreateDeck extends React.Component {
         marginTop: '0.5em',
         fontSize: '1em',
         color: colorscheme[1]
+      },
+      input: {
+        border: 'none'
       }
 
     }
@@ -158,10 +161,10 @@ class CreateDeck extends React.Component {
 
           </Row>
           <Row>
-            <Col md={10} style={cd.input}><input /></Col>
+            <Col md={11} style={cd.input}><input style={cd.input} block /></Col>
           </Row>
           <Row>
-            <Col md={10} style={cd.text}>Type in the deck name</Col>
+            <Col md={11} style={cd.text}>Type in the deck name</Col>
           </Row>
           <Row>
             <Col md={12}>
