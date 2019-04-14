@@ -2,7 +2,7 @@ import React from "react";
 import { Container, Row, Col, Card, Button, Alert } from "react-bootstrap";
 import AddCard from "../partials/AddCard";
 import { putFile } from 'blockstack';
-// const decks = 'decks.json'
+const decks = 'decks.json'
 
 class CreateDeck extends React.Component {
   constructor(props) {
@@ -32,7 +32,7 @@ class CreateDeck extends React.Component {
   }
 
   deleteFromDeck(word) {
-    let newDeck = {...this.state.deck};
+    let newDeck = this.state.deck.slice();
     delete newDeck[word];
     this.setState({ deck: newDeck });
   }
@@ -59,9 +59,12 @@ class CreateDeck extends React.Component {
       });
     } else {
       // Update database
-      let allDecks = {}
-      allDecks = {...allDecks, deckName: []}
-      putFile('decks.json', JSON.stringify(allDecks))
+      const options = { encrypt: false }
+
+      let deckName = this.state.deckName
+      let deck = this.state.deck
+      let newDeck = {deckName, deck}
+      putFile('decks.json', JSON.stringify(newDeck), options)
       this.setState({
         deckName: "",
         alertShow: false
