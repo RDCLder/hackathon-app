@@ -71,7 +71,7 @@ class NavBar extends React.Component {
             <h2>App Name</h2>
           </Link>
         </Col>
-        <Col xs={1} className="my-auto">
+        <Col className="my-auto">
           <Link to="/create">
             <h4>CreateDeck</h4>
           </Link>

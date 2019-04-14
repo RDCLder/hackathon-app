@@ -1,5 +1,4 @@
-
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import { Redirect } from "react-router-dom";
 import NavBar from "./components/partials/NavBar";
@@ -37,10 +36,10 @@ class App extends Component {
   }
 
   loadPerson() {
-    let username = blockstack.loadUserData().username
-    blockstack.lookupProfile(username).then((person) => {
-      this.setState({ person })
-    })
+    let username = blockstack.loadUserData().username;
+    blockstack.lookupProfile(username).then(person => {
+      this.setState({ person });
+    });
   }
 
   handleSignIn(event) {
@@ -65,4 +64,11 @@ class App extends Component {
   }
 }
 
+const styles = {
+  box: {
+    border: "solid 1px black"
+  }
+};
+
 export default App;
+
