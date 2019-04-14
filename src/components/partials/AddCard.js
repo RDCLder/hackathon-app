@@ -1,5 +1,5 @@
 import React from 'react'
-import { Container, Row, Col, Modal, Button, Alert } from 'react-bootstrap'
+import { Container, Row, Modal, Button, Alert } from 'react-bootstrap'
 
 class AddCard extends React.Component {
   constructor (props) {
@@ -31,7 +31,7 @@ class AddCard extends React.Component {
   }
 
   handleSubmit () {
-    const words = this.props.deck.map(card => card.word)
+    const words = Object.keys(this.props.deck)
 
     // Error checks for empty word/text, long word/text, or existing word
     if (this.state.word === '') {

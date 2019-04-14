@@ -8,7 +8,7 @@ class CreateDeck extends React.Component {
 
     this.state = {
       deckName: '',
-      deck: [],
+      deck: {},
       alertMessage: null,
       alertShow: false
     }
@@ -21,13 +21,13 @@ class CreateDeck extends React.Component {
   }
 
   updateDeck (card) {
-    this.setState({
-      deck: this.state.deck.concat(card)
-    })
+    let newDeck = { ...this.state.deck }
+    newDeck[card.word] = card
+    this.setState({ deck: newDeck })
   }
 
   deleteFromDeck (word) {
-    let newDeck = this.state.deck.slice()
+    let newDeck = { ...this.state.deck }
     delete newDeck[word]
     this.setState({ deck: newDeck })
   }
@@ -72,14 +72,7 @@ class CreateDeck extends React.Component {
   }
 
   render () {
-    // const deck = this.state.deck.map(card => (
-    // 	<Card id={card.word}
-    // 		word={card.word}
-    // 		text={card.text}
-    // 		delete={word => this.deleteFromDeck(word)}
-    // 	/>
-
-    const deck = this.state.deck.map(card => (
+    const deck = Object.values(this.state.deck).map(card => (
       <Card key={card.word}>
         <Card.Body>
           <Card.Title>
@@ -98,64 +91,89 @@ class CreateDeck extends React.Component {
     ))
 
     // ======= this is css style object=============
-    const colorscheme = ['#cca0af',
-      '#d9eeb6',
-      '#c6c0f7',
-      '#94dfff',
-      '#ffdcf6']
+    const colorscheme =
+    ['#207b8d',
+      '#00202e',
+      '#527a9c',
+      '#3f5d65',
+      '#335a78']
+
     const cd = {
 
       title: {
         textAlign: 'left',
-        color: colorscheme[1],
-        fontWeight: '300'
+        color: '#94dfff',
+        fontWeight: '300',
+        fontSize: '2em'
+
       },
       plus: {
-        backgroundColor: colorscheme[1]
+        color: colorscheme[1]
+      },
+      savedeck: {
+        // width: '80%',
+        alignSelf: 'center',
+        padding: '1em'
+
+      },
+      text: {
+        borderTop: '3px dashed grey',
+        marginTop: '0.5em',
+        fontSize: '1em',
+        color: colorscheme[1]
       }
+
     }
 
     return (
       <Container fluid='true'>
         <Container>
           <Row>
-            <Col xs={12} md={11}>
+            <Col md={6}>
               <h2 style={cd.title}>Create a new deck:</h2>
             </Col>
+            <Col md={5}>
+              <Alert
+                variant='danger'
+                show={this.state.alertShow}
+                className='alert'
+              >
+                <Alert.Heading>
+            Error
+                  <i
+                    className='fas fa-times alertDismiss'
+                    onClick={() => this.setState({ alertShow: false })}
+                  />
+                </Alert.Heading>
+                <p>{this.state.alertMessage}</p>
+              </Alert>
+            </Col>
+
             <Col xs={4} md={1} >
               <AddCard style={cd.plus}
                 deck={this.state.deck}
                 update={card => this.updateDeck(card)}
               />
             </Col>
+
           </Row>
           <Row>
-            <Col md={8}>space holder for input</Col>
-            <Col md={4}>whatever</Col>
+            <Col md={10} style={cd.input}><input /></Col>
           </Row>
           <Row>
-            <Button variant={colorscheme[2]} onClick={() => this.addDeck()}>
+            <Col md={10} style={cd.text}>Type in the deck name</Col>
+          </Row>
+          <Row>
+            <Col md={12}>
+              <Button style={cd.savedeck}
+                onClick={() => this.addDeck()} block>
               SAVE DECK
-            </Button>
+              </Button>
+            </Col>
           </Row>
         </Container>
 
         <Row>{deck}</Row>
-
-        <Alert
-          variant='danger'
-          show={this.state.alertShow}
-          className='alert'
-        >
-          <Alert.Heading>
-            Error
-            <i
-              className='fas fa-times alertDismiss'
-              onClick={() => this.setState({ alertShow: false })}
-            />
-          </Alert.Heading>
-          <p>{this.state.alertMessage}</p>
-        </Alert>
 
       </Container>
     )
