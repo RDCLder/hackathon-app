@@ -11,7 +11,7 @@ class DeckModal extends React.Component {
 
     render() {
         var cards = this.props.deck.map(card=>{
-            return <CardforModal cardInfo = {card}/>
+            return <CardforModal key = {card} cardInfo = {card}/>
         })
 
         return (
