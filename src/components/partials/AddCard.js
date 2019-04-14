@@ -10,8 +10,11 @@ class AddCard extends React.Component {
       word: "",
       text: "",
       alertMessage: null,
-      alertShow: false
+      alertShow: false,
+      pictures: [] 
     };
+
+    this.onDrop = this.onDrop.bind(this);
   }
 
   changeWord(e) {
@@ -82,6 +85,11 @@ class AddCard extends React.Component {
       }, 2000);
     }
   }
+  onDrop(picture) {
+    this.setState({
+        pictures: this.state.pictures.concat(picture),
+    });
+  }
 
   render() {
     return (
@@ -134,13 +142,14 @@ class AddCard extends React.Component {
                   onChange={e => this.changeText(e)}
                 />
               </Row>
+
             </Container>
           </Modal.Body>
           <Modal.Footer>
-            <Button variant="primary" onClick={() => this.handleSubmit()}>
+            <Button style={styles.whiteButton} onClick={() => this.handleSubmit()}>
               Submit
             </Button>
-            <Button variant="secondary" onClick={() => this.handleClose()}>
+            <Button style={styles.blackButton} onClick={() => this.handleClose()}>
               Close
             </Button>
           </Modal.Footer>
@@ -183,6 +192,16 @@ const styles = {
   },
   addButton: {
     bottom: "30px",
+  },
+  blackButton: {
+    backgroundColor: 'black',
+    color: 'white',
+    border: '1px solid black'
+  },
+  whiteButton: {
+    backgroundColor: 'white',
+    color: 'black',
+    border: '1px solid black'
   },
   width100: {
     width: "100%"

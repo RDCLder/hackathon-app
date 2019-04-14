@@ -22,9 +22,9 @@ class Deck extends React.Component {
                     <Card.Body style = {styles.justifyBetween}>{this.props.deckName}
                         <div style = {styles.buttonContainer}>
                             <Link to={link}>
-                                <Button style={styles.button}>Go to Deck</Button>
+                                <Button style={Object.assign({}, styles.button, styles.whiteButton)}>Go to Deck</Button>
                             </Link>
-                            <Button style={styles.button} onClick={() => this.setState({ modalShow: true })}>View Cards</Button>
+                            <Button style={Object.assign({}, styles.button, styles.blackButton)} onClick={() => this.setState({ modalShow: true })}>View Cards</Button>
                         </div>
                     </Card.Body>
                 </div>
@@ -61,6 +61,16 @@ const styles = {
         display:'flex',
         justifyContent:'space-between',
         paddingTop:'10px'
+    },
+    blackButton: {
+        backgroundColor: 'black',
+        color: 'white',
+        border: '1px solid black'
+    },
+    whiteButton: {
+        backgroundColor: 'white',
+        color: 'black',
+        border: '1px solid black'
     }
 }
 
