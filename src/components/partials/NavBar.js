@@ -5,11 +5,6 @@ import UserInfo from '../../UserInfo';
 
 const blockstack = require('blockstack');
 
-const navbarStyle = {
-  backgroundColor: "black",
-  color: "white"
-}
-
 class NavBar extends React.Component {
   constructor(props) {
     super(props)
@@ -28,6 +23,7 @@ class NavBar extends React.Component {
     this.handleSignIn = this.handleSignIn.bind(this)
     this.handleSignOut = this.handleSignOut.bind(this)
   }
+
   checkSignedInStatus() {
     if (blockstack.isUserSignedIn()) {
       return true;
@@ -50,11 +46,6 @@ class NavBar extends React.Component {
   handleSignIn(event) {
     event.preventDefault();
     blockstack.redirectToSignIn()
-  }
-
-  handleSignOut(event) {
-    event.preventDefault();
-    blockstack.signUserOut(window.location.href)
   }
 
   handleSignOut(event) {
@@ -104,6 +95,11 @@ class NavBar extends React.Component {
       </Row>
     );
   }
+}
+
+const navbarStyle = {
+  backgroundColor: "black",
+  color: "white"
 }
 
 export default NavBar;
