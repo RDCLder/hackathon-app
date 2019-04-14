@@ -22,13 +22,13 @@ class AddCard extends React.Component {
     this.setState({ text: e.target.value });
   }
 
-	handleShow() {
-		this.setState({ show: true })
-	}
+  handleShow() {
+    this.setState({ show: true });
+  }
 
-	handleClose() {
-		this.setState({ show: false })
-	}
+  handleClose() {
+    this.setState({ show: false });
+  }
 
   handleSubmit() {
     const words = Object.keys(this.props.deck);
@@ -60,15 +60,15 @@ class AddCard extends React.Component {
       });
       this.setState({ alertShow: true });
     } else {
-			this.props.update({
-				word: this.state.word,
-				text: this.state.text
-			});
+      this.props.update({
+        word: this.state.word,
+        text: this.state.text
+      });
       this.setState({
         show: false,
-				alertShow: false,
-				word: "",
-				text: ""
+        alertShow: false,
+        word: "",
+        text: ""
       });
     }
 
@@ -86,10 +86,10 @@ class AddCard extends React.Component {
   render() {
     return (
       <React.Fragment>
-
         <Button
-					variant="primary"
+          variant="primary"
           onClick={() => this.handleShow()}
+          style={[styles.floatButton, styles.addButton]}
         >
           <i className="fas fa-plus" />
         </Button>
@@ -143,11 +143,7 @@ class AddCard extends React.Component {
           </Modal.Footer>
         </Modal>
 
-        <Alert
-          variant="danger"
-          show={this.state.alertShow}
-          className="alert"
-        >
+        <Alert variant="danger" show={this.state.alertShow} className="alert">
           <Alert.Heading>
             Error
             <i
@@ -157,10 +153,30 @@ class AddCard extends React.Component {
           </Alert.Heading>
           <p>{this.state.alertMessage}</p>
         </Alert>
-
       </React.Fragment>
     );
   }
 }
+
+const styles = {
+  floatButton: {
+    alignSelf: "center",
+    padding: "1em",
+    position: "fixed",
+    backgroundColor: "#335a78",
+    color: "white",
+    right: "50px",
+    width: "70px",
+    height: "70px",
+    borderRadius: "50%",
+    textAlign: "center",
+    boxShadow: "2px 2px 4px #999",
+    fontSize: "30px",
+    zIndex: "2"
+  },
+  addButton: {
+    bottom: "50px"
+  }
+};
 
 export default AddCard;
