@@ -1,14 +1,8 @@
 import React from "react";
 import { Container, Row, Col, Card, Button, Alert } from "react-bootstrap";
 import AddCard from "../partials/AddCard";
-<<<<<<< HEAD
-import { putFile } from "blockstack";
-
-const decks = "decks.json";
-=======
 import { putFile, getFile } from "blockstack";
 const decks = "allDecks.json";
->>>>>>> master
 
 class CreateDeck extends React.Component {
   constructor(props) {
@@ -24,8 +18,6 @@ class CreateDeck extends React.Component {
     };
   }
 
-<<<<<<< HEAD
-=======
   componentDidMount() {
     this.fetchData();
   }
@@ -38,7 +30,6 @@ class CreateDeck extends React.Component {
     });
   }
 
->>>>>>> master
   changeDeckName(e) {
     this.setState({
       deckName: e.target.value
@@ -58,12 +49,7 @@ class CreateDeck extends React.Component {
   }
 
   addDeck() {
-<<<<<<< HEAD
-    // const deckNames = Object.keys(allDecks);
-    const deckNames = [];
-=======
     const deckNames = Object.keys(this.state.allDecks);
->>>>>>> master
 
     // Error checks for empty name, name over 40 characters, or existing name
     if (this.state.deckName === "") {
@@ -84,27 +70,15 @@ class CreateDeck extends React.Component {
     } else {
       // Update database
       const options = { encrypt: false };
-<<<<<<< HEAD
-
-      let deckName = this.state.deckName;
-      let deck = this.state.deck;
-      let newDeck = { deckName, deck };
-      putFile("decks.json", JSON.stringify(newDeck), options);
-=======
       const deckName = this.state.deckName;
       let newDecks = { ...this.state.allDecks };
       newDecks[deckName] = this.state.deck;
       putFile("allDecks.json", JSON.stringify(newDecks), options);
->>>>>>> master
       this.setState({
         alertSuccessShow: true,
         alertMessage: "Deck saved!",
         deckName: "",
-<<<<<<< HEAD
-        alertShow: false
-=======
         deck: {}
->>>>>>> master
       });
     }
 
@@ -137,58 +111,6 @@ class CreateDeck extends React.Component {
 
     return (
       <Container fluid="true">
-<<<<<<< HEAD
-        <Container>
-          <Row>
-            <Col md={6}>
-              <h2 style={cd.title}>Create a new deck:</h2>
-            </Col>
-            <Col md={5}>
-              <Alert
-                variant="danger"
-                show={this.state.alertShow}
-                className="alert"
-              >
-                <Alert.Heading>
-                  Error
-                  <i
-                    className="fas fa-times alertDismiss"
-                    onClick={() => this.setState({ alertShow: false })}
-                  />
-                </Alert.Heading>
-                <p>{this.state.alertMessage}</p>
-              </Alert>
-            </Col>
-
-            <Col xs={4} md={1}>
-              <AddCard
-                style={cd.plus}
-                deck={this.state.deck}
-                update={card => this.updateDeck(card)}
-              />
-            </Col>
-          </Row>
-          <Row>
-            <Col md={11} style={cd.input}>
-              <input style={cd.input} block />
-            </Col>
-          </Row>
-          <Row>
-            <Col md={11} style={cd.text}>
-              Type in the deck name
-            </Col>
-          </Row>
-          <Row>
-            <Col md={12}>
-              <Button style={cd.savedeck} onClick={() => this.addDeck()} block>
-                SAVE DECK
-              </Button>
-            </Col>
-          </Row>
-        </Container>
-
-        <Row>{deck}</Row>
-=======
         <Row>
           <h2 style={styles.title}>Create New Deck</h2>
         </Row>
@@ -247,22 +169,14 @@ class CreateDeck extends React.Component {
           </Alert.Heading>
           <p>{this.state.alertMessage}</p>
         </Alert>
->>>>>>> master
       </Container>
     );
   }
 }
 
-<<<<<<< HEAD
-// CSS Object
-const colorscheme = ["#207b8d", "#00202e", "#527a9c", "#3f5d65", "#335a78"];
-
-const cd = {
-=======
 const colorscheme = ["#207b8d", "#00202e", "#527a9c", "#3f5d65", "#335a78"];
 
 const styles = {
->>>>>>> master
   title: {
     textAlign: "left",
     color: "#94dfff",
@@ -272,13 +186,6 @@ const styles = {
   plus: {
     color: colorscheme[1]
   },
-<<<<<<< HEAD
-  savedeck: {
-    alignSelf: "center",
-    padding: "1em"
-  },
-=======
->>>>>>> master
   text: {
     borderTop: "3px dashed grey",
     marginTop: "0.5em",
@@ -289,12 +196,9 @@ const styles = {
     border: "none"
   }
 };
-<<<<<<< HEAD
-=======
 
 // <i className="fas fa-save" />
 // <i className="fas fa-trash" />
 // <i className="fas fa-times" />
->>>>>>> master
 
 export default CreateDeck;
